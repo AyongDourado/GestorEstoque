@@ -1,0 +1,13 @@
+﻿@using GestorEstoque.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<GestorEstoqueUsuario> SignInManager
+@inject UserManager<GestorEstoqueUsuario> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h3>Estou logado</h3>
+}
+else
+{
+    <h3>Não tem permissão para acessar</h3>
+}
