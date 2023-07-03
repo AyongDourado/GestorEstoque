@@ -1,0 +1,164 @@
+@model IEnumerable<GestorEstoque.Models.ProdutoEstoque>
+
+@{
+    ViewData["Title"] = "Loja";
+}
+
+<h1 class="mb-5 mt-3">Loja de Produtos</h1>
+
+<div class="container text-center px-0">
+    <div class="row">
+        <div class="col">
+            <div class="card bg-success bg-opacity-10">
+                <div class="card-body">
+                    <h5 class="card-title">Lista de Produtos</h5>
+                    <ul class="list-group">
+                        @foreach(var produtoEstoque in Model){
+                            <li class="d-flex list-group-item justify-content-between align-items-center">
+                                @Html.HiddenFor(modelItem => produtoEstoque.Id)
+                                @Html.HiddenFor(modelItem => produtoEstoque.Produto.Marca)
+                                @Html.HiddenFor(modelItem => produtoEstoque.Produto.Nome)
+                                @Html.HiddenFor(modelItem => produtoEstoque.Produto.Valor)
+                                <span>@Html.DisplayFor(modelItem => produtoEstoque.Produto.Marca)</span>
+                                <span>@Html.DisplayFor(modelItem => produtoEstoque.Produto.Nome)</span>
+                                <span>@Html.DisplayFor(modelItem => produtoEstoque.Produto.Valor)</span>
+                                <button onclick="AdicionarNoCarrinho(this)" type="button" class="btn btn-outline-primary">Adicionar</button>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card bg-primary bg-opacity-10">
+                <div class="card-body">
+                    <h5 class="card-title">Cesta de compras</h5>
+                    <div>
+                        <ul id="cesta" class="list-group">
+                        </ul>
+                        <div class="row mt-4 align-items-center text-center">
+                            <div class="col">
+                                <span class="fs-5">Valor Total: </span>
+                                <span class="valor_total fw-bold fs-4">R$ 00,00</span>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <button id="btn-comprar" disabled onclick="ComprarCesta()" type="buttom" class="btn btn-success">Comprar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const cesta = [];
+
+    const AdicionarNoCarrinho = (produtoEstoqueAddBtn) => {
+        const produtoEstoqueId = $(produtoEstoqueAddBtn).parent().find('#produtoEstoque_Id').val();
+        const produtoMarca = $(produtoEstoqueAddBtn).parent().find('#produtoEstoque_Produto_Marca').val();
+        const produtoNome = $(produtoEstoqueAddBtn).parent().find('#produtoEstoque_Produto_Nome').val();
+        const produtoValor = $(produtoEstoqueAddBtn).parent().find('#produtoEstoque_Produto_Valor').val();
+
+        const itemCesta = cesta.find(p => p.produtoEstoqueId === produtoEstoqueId);
+        if(itemCesta){
+            itemCesta.quantidade++;
+            AtualizarValorTotalCesta();
+            $('#cesta').find(`#${produtoEstoqueId}`).find('.quantidade_produto').text(itemCesta.quantidade);
+            return;
+        }
+
+        cesta.push({produtoEstoqueId, "quantidade": 1, "valor": produtoValor});
+        AtualizarValorTotalCesta();
+
+        const html = `<li id="${produtoEstoqueId}" class="d-flex list-group-item justify-content-between align-items-center">
+            <span>${produtoMarca}</span>
+            <span>${produtoNome}</span>
+            <span>R$ ${produtoValor}</span>
+            <span class="badge bg-primary rounded-pill quantidade_produto">1</span>
+            <div class="">
+                <button onclick="DiminuirDoCarrinho(this)" type="button" class="btn btn-outline-warning">-</button>
+                <button onclick="RemoverDoCarrinho(this)" type="button" class="btn btn-outline-danger">X</button>
+            </div>
+        </li>`;
+
+        $('#cesta').append(html);
+        $('#btn-comprar').attr('disabled', false);
+    }
+
+    const DiminuirDoCarrinho = (btnDiminuir) => {
+        const itemCestaEl = $(btnDiminuir).parent().parent();
+        const produtoEstoqueId = $(itemCestaEl).attr('id');
+
+        const cestaItem = cesta.find(p => p.produtoEstoqueId === produtoEstoqueId);
+
+        if(cestaItem.quantidade === 1){
+            RemoverDoCarrinho(btnDiminuir);
+            AtualizarValorTotalCesta();
+            return;
+        } 
+
+        cestaItem.quantidade--;
+        AtualizarValorTotalCesta();
+        $(itemCestaEl).find('.quantidade_produto').text(cestaItem.quantidade);
+    }
+
+    const RemoverDoCarrinho = (btnRemover) => {
+        const itemCestaEl = $(btnRemover).parent().parent();
+        const produtoEstoqueId = $(itemCestaEl).attr('id');
+
+        const cestaItem = cesta.find(p => p.produtoEstoqueId === produtoEstoqueId);
+        const idx = cesta.indexOf(cestaItem);
+        cesta.splice(idx,1);
+        AtualizarValorTotalCesta();
+        $(itemCestaEl).remove();
+
+        if(cesta.length == 0)
+            $('#btn-comprar').attr('disabled', true);
+    }
+
+    const AtualizarValorTotalCesta = () => {
+        let valorTotal = 0;
+
+        cesta.forEach(cestaItem => {
+            const str = cestaItem.valor.replace(',','.');
+            valorTotal += (parseFloat(str) * cestaItem.quantidade);
+        });
+
+        const val = valorTotal.toFixed(2);
+
+        $('.valor_total').text(`R$ ${val.replace(".",",")}`);
+        console.log("cesta >>> ", cesta);
+        console.log("valorTotal >>> ", valorTotal);
+    }
+
+    const ComprarCesta = async () => {
+        try {
+            const payload = cesta.map(item => { 
+                return { 
+                    Id: parseInt(item.produtoEstoqueId),
+                    Quantidade: item.quantidade
+                }
+            });
+
+            $('#btn-comprar').attr('disabled', true);
+
+            const response = await fetch('https://localhost:7210/Loja/Comprar', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload)
+            });
+
+            alert("COMPRA REALIZADA COM SUCESSO!");
+
+            window.location.href= "/Home";
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>

@@ -1,4 +1,4 @@
-﻿@model StockManager1.Models.Produto
+﻿@model GestorEstoque.Models.Produto
 
 @{
     ViewData["Title"] = "Create";
@@ -28,12 +28,12 @@
                 <span asp-validation-for="ValorString" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Validade" class="control-label"></label>
-                <input asp-for="Validade" class="form-control" />
-                <span asp-validation-for="Validade" class="text-danger"></span>
+                <label asp-for="QtdMin" class="control-label"></label>
+                <input asp-for="QtdMin" class="form-control" />
+                <span asp-validation-for="QtdMin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>

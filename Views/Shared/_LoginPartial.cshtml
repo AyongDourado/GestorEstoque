@@ -8,14 +8,25 @@
     @if (SignInManager.IsSignedIn(User))
     {   
         <div class="row">
-            <div class="col">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name</a>
-            </div>
+            @if(User.IsInRole("Admin")){
+                <div class="col">
+                    <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Administrador</a>
+                </div>
+            }
+            else if(User.IsInRole("Funcionario")){
+                <div class="col">
+                    <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Funcionario</a>
+                </div>
+            }
+            else {
+                <div class="col">
+                    <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity?.Name</a>
+                </div>
+            }
             <div class="col">
                 <a class="btn btn-warning" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout <i class="bi bi-box-arrow-in-right"></i></a>
             </div>
         </div>
-        
     }
     else
     {

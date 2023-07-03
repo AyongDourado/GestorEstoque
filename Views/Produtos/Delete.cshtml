@@ -1,4 +1,4 @@
-﻿@model StockManager1.Models.Produto
+﻿@model GestorEstoque.Models.Produto
 
 @{
     ViewData["Title"] = "Delete";
@@ -6,7 +6,7 @@
 
 <h1>Deletar</h1>
 
-<h3>Você tem certeza que deseja deletar?</h3>
+<h3>Tem certeza que deseja deletar?</h3>
 <div>
     <h4>Produto</h4>
     <hr />
@@ -30,10 +30,10 @@
             @Html.DisplayFor(model => model.Valor)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Validade)
+            @Html.DisplayNameFor(model => model.QtdMin)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Validade)
+            @Html.DisplayFor(model => model.QtdMin)
         </dd>
     </dl>
     

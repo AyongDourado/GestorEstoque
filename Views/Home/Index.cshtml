@@ -1,8 +1,61 @@
-﻿@{
+﻿@using GestorEstoque.Areas.Identity.Data;
+@using Microsoft.AspNetCore.Identity;
+
+@inject SignInManager<GestorEstoqueUsuario> SignInManager;
+
+@{
     ViewData["Title"] = "Home Page";
+    string containerStyle = User.IsInRole("Admin") ? "" : "grid-template-columns: 1fr !important";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center center" style="@containerStyle">
+    @if(User.IsInRole("Admin")) {
+        <a asp-area="" asp-controller="Produtos" asp-action="Index" 
+            class="card text-white bg-success mb-3 card-scale card-home shadow">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h5 class="card-title fs-1">Produtos</h5>
+            </div>
+        </a>
+        <a asp-area="" asp-controller="ProdutoEstoque" asp-action="Index" 
+            class="card text-white card-estoque mb-3 card-scale card-home shadow">
+            <div class="card-body d-flex flex-column justify-content-center">
+                <h5 class="card-title fs-1">Estoque</h5>
+            </div>
+        </a>
+    }
+    <a asp-area="" asp-controller="Loja" asp-action="Index" 
+        class="card text-white mb-3 card-loja card-scale card-home shadow">
+        <div class="card-body d-flex flex-column justify-content-center">
+            <h5 class="card-title fs-1">Loja</h5>
+        </div>
+    </a>
 </div>
+
+<style>
+    .card-loja{
+        background: #045BF5;
+    }
+    .card-scale:hover{
+        transform: scale(1.2);
+    }
+
+    .card-estoque{
+        background: #F39B1C
+    }
+
+    .center{
+        height: calc(100dvh - (80px + 62px + 1rem));
+        display: grid;
+        place-items: center;
+        grid-template-columns: repeat(3,1fr);
+    }
+
+    .card-home{
+        width: clamp(10rem, 20rem, 30rem);
+        height: clamp(10rem, 20rem, 30rem);
+        transition: all ease-in-out;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        text-decoration: none;
+    }
+</style>

@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestorEstoque.Data;
-using StockManager1.Models;
+using GestorEstoque.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestorEstoque.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProdutosController : Controller
     {
         private readonly GestorEstoqueContext _context;
@@ -56,7 +58,7 @@ namespace GestorEstoque.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Nome,ValorString,Validade")] Produto produto)
+        public async Task<IActionResult> Create([Bind("Id,Marca,Nome,ValorString,QtdMin")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +91,7 @@ namespace GestorEstoque.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Nome,ValorString,Validade")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Nome,ValorString,QtdMin")] Produto produto)
         {
             if (id != produto.Id)
             {

@@ -1,4 +1,4 @@
-﻿@model StockManager1.Models.Produto
+﻿@model GestorEstoque.Models.Produto
 
 @{
     ViewData["Title"] = "Details";
@@ -29,10 +29,10 @@
             @Html.DisplayFor(model => model.Valor)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Validade)
+            @Html.DisplayNameFor(model => model.QtdMin)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Validade)
+            @Html.DisplayFor(model => model.QtdMin)
         </dd>
     </dl>
 </div>

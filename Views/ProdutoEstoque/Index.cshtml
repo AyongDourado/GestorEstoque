@@ -1,10 +1,10 @@
-﻿@model IEnumerable<GestorEstoque.Models.Produto>
+﻿@model IEnumerable<GestorEstoque.Models.ProdutoEstoque>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Produtos</h1>
+<h1>Produtos no estoque</h1>
 
 <p>
     <a class="btn btn-success" asp-action="Create">Novo</a>
@@ -13,16 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Marca)
+                @Html.DisplayNameFor(model => model.Produto)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                @Html.DisplayNameFor(model => model.Quantidade)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Valor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.QtdMin)
+                @Html.DisplayNameFor(model => model.Validade)
             </th>
             <th></th>
         </tr>
@@ -31,16 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Marca)
+                @Html.DisplayFor(modelItem => item.Produto.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nome)
+                @Html.DisplayFor(modelItem => item.Quantidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Valor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.QtdMin)
+                @Html.DisplayFor(modelItem => item.Validade)
             </td>
             <td class="d-flex justify-content-center gap-2">
                 <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a>

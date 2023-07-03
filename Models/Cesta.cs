@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StockManager1.Models
+namespace GestorEstoque.Models
 {
     public class Cesta
     {
-        public ProdutoCesta produtos { get; set; }
+        public int Id { get; set; }
+        public int Quantidade { get; set; }
     }
 }

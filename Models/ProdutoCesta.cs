@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StockManager1.Models
+namespace GestorEstoque.Models
 {
     public class ProdutoCesta
     {

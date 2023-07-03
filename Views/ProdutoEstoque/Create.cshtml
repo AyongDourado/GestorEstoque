@@ -1,29 +1,33 @@
-﻿@model StockManager1.Models.ProdutoEstoque
+﻿@model GestorEstoque.Models.ProdutoEstoque
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Criar</h1>
+<h1>Nova entrada</h1>
 
-<h4>ProdutoEstoque</h4>
+<h4>Produto no estoque</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Produto" class="control-label"></label>
+                <select asp-for="ProdutoId" class ="form-control" asp-items="ViewBag.ProdutoId"></select>
+            </div>
+            <div class="form-group">
                 <label asp-for="Quantidade" class="control-label"></label>
-                <input min="1" asp-for="Quantidade" class="form-control" />
+                <input asp-for="Quantidade" class="form-control" />
                 <span asp-validation-for="Quantidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="QtdMin" class="control-label"></label>
-                <input min="1" asp-for="QtdMin" class="form-control" />
-                <span asp-validation-for="QtdMin" class="text-danger"></span>
+                <label asp-for="Validade" class="control-label"></label>
+                <input asp-for="Validade" class="form-control" />
+                <span asp-validation-for="Validade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
+                <input type="submit" value="Adicionar" class="btn btn-primary" />
             </div>
         </form>
     </div>

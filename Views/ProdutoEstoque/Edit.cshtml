@@ -1,4 +1,4 @@
-﻿@model StockManager1.Models.ProdutoEstoque
+﻿@model GestorEstoque.Models.ProdutoEstoque
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h1>Editar</h1>
 
-<h4>Produto Estoque</h4>
+<h4>Produto no estoque</h4> 
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,23 +14,28 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
+                <label asp-for="Produto" class="control-label"></label>
+                <select asp-for="ProdutoId" class="form-control" asp-items="ViewBag.ProdutoId"></select>
+                <span asp-validation-for="ProdutoId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Quantidade" class="control-label"></label>
-                <input min="0" asp-for="Quantidade" class="form-control" />
+                <input asp-for="Quantidade" class="form-control" />
                 <span asp-validation-for="Quantidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="QtdMin" class="control-label"></label>
-                <input min="1" asp-for="QtdMin" class="form-control" />
-                <span asp-validation-for="QtdMin" class="text-danger"></span>
+                <label asp-for="Validade" class="control-label"></label>
+                <input asp-for="Validade" class="form-control" />
+                <span asp-validation-for="Validade" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
+<div class="mt-2">
     <a asp-action="Index">Voltar para a lista</a>
 </div>
 

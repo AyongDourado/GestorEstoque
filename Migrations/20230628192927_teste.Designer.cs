@@ -4,6 +4,7 @@ using GestorEstoque.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestorEstoque.Migrations
 {
     [DbContext(typeof(GestorEstoqueContext))]
-    partial class GestorEstoqueContextModelSnapshot : ModelSnapshot
+    [Migration("20230628192927_teste")]
+    partial class teste
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,7 +260,7 @@ namespace GestorEstoque.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ProdutoId")
+                    b.Property<int>("ProdutoId1")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantidade")
@@ -269,7 +271,7 @@ namespace GestorEstoque.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProdutoId");
+                    b.HasIndex("ProdutoId1");
 
                     b.ToTable("ProdutoEstoque");
                 });
@@ -329,7 +331,7 @@ namespace GestorEstoque.Migrations
                 {
                     b.HasOne("StockManager1.Models.Produto", "Produto")
                         .WithMany()
-                        .HasForeignKey("ProdutoId")
+                        .HasForeignKey("ProdutoId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
