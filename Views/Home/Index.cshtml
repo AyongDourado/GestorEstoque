@@ -5,35 +5,38 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    string containerStyle = User.IsInRole("Admin") ? "" : "grid-template-columns: 1fr !important";
+    string containerStyle = User.IsInRole("Admin") ? "" : "grid-template-columns: 1fr !important"; 
 }
 
+<div class="bg-img"></div>
 <div class="text-center center" style="@containerStyle">
-    @if(User.IsInRole("Admin")) {
-        <a asp-area="" asp-controller="Produtos" asp-action="Index" 
-            class="card text-white bg-success mb-3 card-scale card-home shadow">
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-area="" asp-controller="Produtos" asp-action="Index"
+           class="card text-white card-produtos mb-3 card-scale card-home shadow">
             <div class="card-body d-flex flex-column justify-content-center">
-                <h5 class="card-title fs-1">Produtos</h5>
+                <h5 class="card-title fs-2">Produtos</h5>
             </div>
         </a>
-        <a asp-area="" asp-controller="ProdutoEstoque" asp-action="Index" 
-            class="card text-white card-estoque mb-3 card-scale card-home shadow">
+        <a asp-area="" asp-controller="ProdutoEstoque" asp-action="Index"
+           class="card text-white card-estoque mb-3 card-scale card-home shadow">
             <div class="card-body d-flex flex-column justify-content-center">
-                <h5 class="card-title fs-1">Estoque</h5>
+                <h5 class="card-title fs-2">Estoque</h5>
             </div>
         </a>
     }
-    <a asp-area="" asp-controller="Loja" asp-action="Index" 
-        class="card text-white mb-3 card-loja card-scale card-home shadow">
+    <a asp-area="" asp-controller="Loja" asp-action="Index"
+       class="card text-white mb-3 card-loja card-scale card-home shadow">
         <div class="card-body d-flex flex-column justify-content-center">
-            <h5 class="card-title fs-1">Loja</h5>
+            <h5 class="card-title fs-2">Loja</h5>
         </div>
     </a>
 </div>
 
+
 <style>
     .card-loja{
-        background: #045BF5;
+        background: #03BBA3
     }
     .card-scale:hover{
         transform: scale(1.2);
@@ -43,6 +46,10 @@
         background: #F39B1C
     }
 
+    .card-produtos{
+        background: #0092BF
+    }
+
     .center{
         height: calc(100dvh - (80px + 62px + 1rem));
         display: grid;
@@ -50,12 +57,29 @@
         grid-template-columns: repeat(3,1fr);
     }
 
+    .bg-img{
+        margin-top: 80px;
+        margin-botom: 60px;
+        height: calc(100dvh - (80px + 45px + 1rem));
+        width: 100vw;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: url("/img/cestablur.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        z-index: -1;
+    }
+
     .card-home{
         width: clamp(10rem, 20rem, 30rem);
-        height: clamp(10rem, 20rem, 30rem);
         transition: all ease-in-out;
         transition-duration: 0.4s;
         cursor: pointer;
         text-decoration: none;
+    }
+
+    .card{
+        border-radius: 3.25rem;
     }
 </style>
